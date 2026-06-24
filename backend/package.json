@@ -2,9 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "src/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc ./src/server.ts "
   },
   "keywords": [],
   "author": "",
@@ -13,10 +14,14 @@
   "dependencies": {
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mongoose": "^9.7.2"
+    "mongoose": "^9.7.2",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/mongoose": "^5.11.96",
     "@types/node": "^26.0.0",
+    "nodemon": "^3.1.14",
     "typescript": "^6.0.3"
   }
 }
