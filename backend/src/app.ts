@@ -1,6 +1,7 @@
 import express from "express";
 import connectDB from "./config/db.ts";
 import catRouter from "./routes/cat.route.ts";
+import aiRouter from "./routes/ai.route.ts";
 
 const app = express();
 
@@ -17,5 +18,7 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/cats", catRouter)
+
+app.use("/api/ai", aiRouter)
 
 export default app;

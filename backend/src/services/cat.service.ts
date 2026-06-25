@@ -17,7 +17,7 @@ export const getCatByIdService = async (id : string) => {
 
 // Service to update a cat by ID
 export const updateCatByIdService = async (id : string, payload : object) => {
-    return await CatModel.findByIdAndUpdate(id, payload, { new: true });
+    return await CatModel.findByIdAndUpdate(id, payload, { returnDocument: "after"});
 }
 
 // Service to delete a cat by ID
@@ -37,7 +37,7 @@ export const searchCatsService = async (query : string) => {
     });
 }
 
-// Service to recommend cats based on user preferences
+// Service to recommend cats based on user preferences for kids-friendly and apartment-friendly cats
 export const recommendCatsService = async (kidsFriendly : boolean, apartmentFriendly : boolean) => {
     return await CatModel.find({
         kidsFriendly: kidsFriendly,
