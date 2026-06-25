@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-// import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { recommendCatsTool } from "./tools/recommendCats.tool.ts";
+import { getAllCatsTool, recommendCatsTool } from "./tools/cats.tool.ts";
 
 // Create server instance
 const server = new McpServer({
@@ -9,24 +9,52 @@ const server = new McpServer({
   version: "1.0.0",
 });
 
-server.registerTool("recommendCats", {
-    title: "Recommend Cats",
-    description: "Recommend best cats based on user preferences for kids-friendly and apartment-friendly cats",
+server.registerTool(
+  "recommend_cats",
+  {
+    title: "recommend_cats",
+    description: "Recommend a Best Cat breed according to Inputs",
     inputSchema: {
-        kidsFriendly: z.boolean(),
-        apartmentFriendly: z.boolean()
-    }}, 
-    async ({ kidsFriendly, apartmentFriendly }) => {
-        const result = await recommendCatsTool(kidsFriendly, apartmentFriendly);
-        return {
-            content: [
-                {
-                    type: "text",
-                    text: `Recommended Cats: ${JSON.stringify(result)}`
-                }
-            ]
-        }
-    }
+      kidsFriendly: z.boolean(),
+      apartmentFriendly: z.boolean(),
+    },
+  },
+  async ({ kidsFriendly, apartmentFriendly }) => {
+    const result = await recommendCatsTool(kidsFriendly, apartmentFriendly);
+
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(result),
+        },
+      ],
+    };
+  }
 );
 
-console.log("MCP server is running...");
+server.registerTool(
+  "get_all_cats",
+  {
+    title: "all cats",
+    description: "cats Data",
+  },
+  async () => {
+    const result = await getAllCatsTool();
+
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(result),
+        },
+      ],
+    };
+  }
+);
+
+const transporter = new StdioServerTransport();
+
+await server.connect(transporter);
+
+console.error("tiny cats mcp running..");
