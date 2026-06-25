@@ -1,16 +1,18 @@
 import { Router } from "express";
-import { createCatContoller } from "../controllers/cat.controller.ts";
+import { createCatContoller, deleteCatByIdController, getAllCatsController, getCatByIdController, recommendCatsController, searchCatsController, updateCatByIdController } from "../controllers/cat.controller.ts";
 
 const catRouter = Router();
 
 catRouter.post("/create", createCatContoller);
 
-// catRouter.get("/")
+catRouter.get("/:id", getCatByIdController);
+catRouter.put("/:id", updateCatByIdController);
+catRouter.delete("/:id", deleteCatByIdController);
 
-// catRouter.get("/search/all")
+catRouter.get("/", getAllCatsController);
 
-// catRouter.post("/recommend")
+catRouter.get("/search/all", searchCatsController);
 
-// catRouter.get("/:id")
+catRouter.post("/recommend", recommendCatsController);
 
 export default catRouter;
